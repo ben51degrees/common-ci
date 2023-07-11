@@ -50,6 +50,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           . ${{ github.workspace }}/common/nightly-pr-to-main_get-prs.ps1 `
           -RepoName ${{ inputs.repo-name }} `
           -OrgName ${{ inputs.org-name }} `
@@ -57,7 +58,8 @@ jobs:
           -GitHubToken ${{ secrets.token }} `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -GitHubOutput $Env:GITHUB_OUTPUT 
+          -GitHubOutput $Env:GITHUB_OUTPUT `
+          *>&1 | CaptureOutputForGit
 
   # Run the common workflow on each pull request
   Nightly_PR_to_Main:
