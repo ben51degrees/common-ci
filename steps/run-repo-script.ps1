@@ -15,6 +15,7 @@ $Script = [IO.Path]::Combine($RepoPath, "ci", $ScriptName)
 
 # Get the named parameters from the script file.
 $ScriptParameters = (Get-Command -Name $Script).Parameters
+Write-Output "Params: $ScriptParameters"
 
 $Parameters = @{}
 
