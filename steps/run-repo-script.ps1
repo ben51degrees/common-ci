@@ -20,6 +20,8 @@ $Parameters = @{}
 
 # Add all the parameters that are available in the options.
 foreach ($Option in $Options.GetEnumerator()) {
+    Write-Output "Checking: $($Option.Key)"
+    Write-Output "Value: $($Option.Value)"
     if ($ScriptParameters.ContainsKey($Option.Key) -and $Null -ne $Option.Value) {
         Write-Output "Adding parameter '$($Option.Key)'"
         $Parameters.Add($Option.Key, $Option.Value)
