@@ -14,7 +14,7 @@ $Url = "https://github.com/$OrgName/$RepoName"
 $RepoPath = [IO.Path]::Combine($pwd, $TemporaryRepoName)
 
 Write-Output "Cloning '$Url'"
-git clone $Url $TemporaryRepoName
+git clone $Url $TemporaryRepoName 2>&1
 
 
 Write-Output "Entering '$RepoPath'"
