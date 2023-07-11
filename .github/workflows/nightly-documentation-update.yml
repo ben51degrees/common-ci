@@ -48,7 +48,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
-          . ./functions.ps1
+          . ${{ github.workspace }}/common/functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $SeparateExamples = [bool]::Parse( "${{ inputs.separate-examples}}" )
           . ${{ github.workspace }}/common/nightly-documentation-update.ps1 `

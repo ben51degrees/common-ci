@@ -52,7 +52,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
-          . ./functions.ps1
+          . ${{ github.workspace }}/common/functions.ps1
           $SeparateExamples = [bool]::Parse( "${{ inputs.separate-examples}}" )
           . ${{ github.workspace }}/common/generate-documentation.ps1 `
           -GitHubToken ${{ secrets.token }} `
@@ -75,7 +75,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
-          . ./functions.ps1
+          . ${{ github.workspace }}/common/functions.ps1
           . ${{ github.workspace }}/common/steps/comment-on-issue.ps1 `
           -RepoName ${{ inputs.repo-name }} `
           -OrgName ${{ inputs.org-name }} `

@@ -50,7 +50,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
-          . ./functions.ps1
+          . ${{ github.workspace }}/common/functions.ps1
           . ${{ github.workspace }}/common/nightly-pr-to-main_get-prs.ps1 `
           -RepoName ${{ inputs.repo-name }} `
           -OrgName ${{ inputs.org-name }} `
