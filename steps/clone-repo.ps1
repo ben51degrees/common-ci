@@ -41,7 +41,7 @@ try {
     }
     
     Write-Output "Checking out submodules"
-    git submodule update --init --recursive
+    git submodule update --init --recursive -q
 
 }
 finally {
