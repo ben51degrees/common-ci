@@ -22,6 +22,7 @@ $Parameters = @{}
 
 # Add all the parameters that are available in the options.
 foreach ($Option in $Options.GetEnumerator()) {
+    $ScriptParameters.ContainsKey($Option.Key)
     Write-Output "Checking: $($Option.Key)"
     Write-Output "Value: $($Option.Value)"
     if ($ScriptParameters.ContainsKey($Option.Key) -and $Null -ne $Option.Value) {
