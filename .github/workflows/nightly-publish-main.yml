@@ -79,7 +79,7 @@ jobs:
           -GitHubOutput $Env:GITHUB_OUTPUT `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
 
   PreBuild:
     needs: Configure
@@ -113,7 +113,7 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
           
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -157,7 +157,7 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
 
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -222,7 +222,7 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
 
       - name: Save Asset Cache
         if: inputs.cache-assets && always()
@@ -277,4 +277,4 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit

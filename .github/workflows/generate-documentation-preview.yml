@@ -62,7 +62,7 @@ jobs:
           -GitHubEmail ${{ inputs.email }} `
           -PullRequestId ${{ inputs.pull-request-id }} `
           -SeparateExamples $SeparateExamples `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.2

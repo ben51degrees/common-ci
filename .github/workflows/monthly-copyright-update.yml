@@ -53,4 +53,4 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit

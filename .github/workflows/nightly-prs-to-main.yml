@@ -59,7 +59,7 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -GitHubOutput $Env:GITHUB_OUTPUT `
-          *>&1 | CaptureOutputForGit
+          *>&1 | CaptureLogsForGit
 
   # Run the common workflow on each pull request
   Nightly_PR_to_Main:
