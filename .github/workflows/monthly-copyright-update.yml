@@ -44,6 +44,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           . ${{ github.workspace }}/common/monthly-copyright-update.ps1 `
           -GitHubToken ${{ secrets.token }} `
@@ -51,4 +52,5 @@ jobs:
           -OrgName ${{ inputs.org-name }} `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -DryRun $DryRun
+          -DryRun $DryRun `
+          *>&1 | CaptureOutputForGit

@@ -71,13 +71,15 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           . ${{ github.workspace }}/common/nightly-publish-main_configure.ps1 `
           -RepoName ${{ inputs.repo-name }} `
           -OrgName ${{ inputs.org-name }} `
           -GitHubToken ${{ secrets.token }} `
           -GitHubOutput $Env:GITHUB_OUTPUT `
           -GitHubUser ${{ inputs.user }} `
-          -GitHubEmail ${{ inputs.email }}
+          -GitHubEmail ${{ inputs.email }} `
+          *>&1 | CaptureOutputForGit
 
   PreBuild:
     needs: Configure
@@ -99,6 +101,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $Options = $(ConvertFrom-Json -AsHashtable '${{ toJSON(matrix.options) }}')
           $Options.Add("Keys", $(ConvertFrom-Json -AsHashtable '${{ secrets.asset-keys }}'))
@@ -109,7 +112,8 @@ jobs:
           -Options $Options `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -DryRun $DryRun
+          -DryRun $DryRun `
+          *>&1 | CaptureOutputForGit
           
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -140,6 +144,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $Options = @{}
           $Options.Add("Keys", $(ConvertFrom-Json -AsHashtable '${{ secrets.asset-keys }}'))
@@ -151,7 +156,8 @@ jobs:
           -Options $Options `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -DryRun $DryRun
+          -DryRun $DryRun `
+          *>&1 | CaptureOutputForGit
 
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -204,6 +210,7 @@ jobs:
         if: ${{ success() && matrix.options.packagerequirement }}
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $Options = $(ConvertFrom-Json -AsHashtable '${{ toJSON(matrix.options) }}')
           $Options.Add("Keys", $(ConvertFrom-Json -AsHashtable '${{ secrets.asset-keys }}'))
@@ -214,7 +221,8 @@ jobs:
           -Options $Options `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -DryRun $DryRun
+          -DryRun $DryRun `
+          *>&1 | CaptureOutputForGit
 
       - name: Save Asset Cache
         if: inputs.cache-assets && always()
@@ -256,6 +264,7 @@ jobs:
         if: ${{ success() }}
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $Options = @{}
           $Options.Add("Keys", $(ConvertFrom-Json -AsHashtable '${{ secrets.asset-keys }}'))
@@ -267,4 +276,5 @@ jobs:
           -Options $Options `
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
-          -DryRun $DryRun
+          -DryRun $DryRun `
+          *>&1 | CaptureOutputForGit

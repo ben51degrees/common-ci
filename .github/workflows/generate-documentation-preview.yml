@@ -52,6 +52,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $SeparateExamples = [bool]::Parse( "${{ inputs.separate-examples}}" )
           . ${{ github.workspace }}/common/generate-documentation.ps1 `
           -GitHubToken ${{ secrets.token }} `
@@ -60,7 +61,8 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -PullRequestId ${{ inputs.pull-request-id }} `
-          -SeparateExamples $SeparateExamples
+          -SeparateExamples $SeparateExamples `
+          *>&1 | CaptureOutputForGit
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -73,10 +75,12 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           . ${{ github.workspace }}/common/steps/comment-on-issue.ps1 `
           -RepoName ${{ inputs.repo-name }} `
           -OrgName ${{ inputs.org-name }} `
           -GitHubToken ${{ secrets.token }} `
           -Id ${{ inputs.pull-request-id }} `
-          -Message "Preview available [here](https://github.com/${{ inputs.org-name }}/${{ inputs.repo-name }}/actions/runs/${{ github.run_id }}#artifacts)."
+          -Message "Preview available [here](https://github.com/${{ inputs.org-name }}/${{ inputs.repo-name }}/actions/runs/${{ github.run_id }}#artifacts)." `
+          *>&1 | CaptureOutputForGit
           

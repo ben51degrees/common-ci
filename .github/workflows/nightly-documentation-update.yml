@@ -48,6 +48,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}/common/
         run: |
+          . ./functions.ps1
           $DryRun = [bool]::Parse( "${{ inputs.dryrun }}" )
           $SeparateExamples = [bool]::Parse( "${{ inputs.separate-examples}}" )
           . ${{ github.workspace }}/common/nightly-documentation-update.ps1 `
@@ -57,5 +58,6 @@ jobs:
           -GitHubUser ${{ inputs.user }} `
           -GitHubEmail ${{ inputs.email }} `
           -DryRun $DryRun `
-          -SeparateExamples $SeparateExamples
+          -SeparateExamples $SeparateExamples `
+          *>&1 | CaptureOutputForGit
           
