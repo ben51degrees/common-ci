@@ -12,10 +12,10 @@ param (
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
 $Script = [IO.Path]::Combine($RepoPath, "ci", $ScriptName)
+Write-Output "Building parameters for $Script"
 
 # Get the named parameters from the script file.
 $ScriptParameters = (Get-Command -Name $Script).Parameters
-Write-Output "Params: $ScriptParameters"
 
 $Parameters = @{}
 
